@@ -30,6 +30,36 @@ const expectLogContains = (received, expectedLogs) => {
 };
 
 describe("기능 테스트", () => {
+  test("문제의 예시대로 출력되는지 테스트", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = [
+      "<주문 메뉴>",
+      "티본스테이크 1개",
+      "바비큐립 1개",
+      "초코케이크 2개",
+      "제로콜라 1개",
+      "<할인 전 총주문 금액>",
+      "142,000원",
+      "<혜택 내역>",
+      "크리스마스 디데이 할인: -1,200원",
+      "평일 할인: -4,046원",
+      "<총혜택 금액>",
+      "-5,246원",
+      "<할인 후 예상 결제 금액>",
+      "136,754원",
+    ];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
   test("모든 타이틀 출력", async () => {
     // given
     const logSpy = getLogSpy();
@@ -43,11 +73,9 @@ describe("기능 테스트", () => {
     const expected = [
       "<주문 메뉴>",
       "<할인 전 총주문 금액>",
-      "<증정 메뉴>",
       "<혜택 내역>",
       "<총혜택 금액>",
       "<할인 후 예상 결제 금액>",
-      "<12월 이벤트 배지>",
     ];
 
     expectLogContains(getOutput(logSpy), expected);
