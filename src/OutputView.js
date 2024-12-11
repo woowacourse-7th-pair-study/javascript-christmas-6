@@ -21,7 +21,7 @@ const OutputView = {
     Console.print(eventInfo);
   },
   printTotalEventAmount(eventAmount) {
-    Console.print('\n<총 혜택 금액>');
+    Console.print('\n<총혜택 금액>');
     Console.print(`${eventAmount.toLocaleString()}원`);
   },
   printTotalPurchaseAmount(purchaseAmount) {

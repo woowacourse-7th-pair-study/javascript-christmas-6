@@ -32,7 +32,7 @@ const Validation = {
       menuSet.add(menuName);
 
       // count Validation
-      if (Number.isNaN(Number(input)) || !Number.isInteger(Number(input)) || Number(count) < 1) {
+      if (Number.isNaN(Number(count)) || !Number.isInteger(Number(count)) || Number(count) < 1) {
         throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
       }
       allCount += Number(count);

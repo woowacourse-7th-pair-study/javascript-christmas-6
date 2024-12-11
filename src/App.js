@@ -38,7 +38,7 @@ class App {
       return Number(input);
     } catch (error) {
       OutputView.printMessage(error.message);
-      await this.#getVisitDay();
+      return await this.#getVisitDay();
     }
   }
 
@@ -50,7 +50,7 @@ class App {
       return orderList;
     } catch (error) {
       OutputView.printMessage(error.message);
-      await this.#getOrder();
+      return await this.#getOrder();
     }
   }
 }

@@ -60,7 +60,7 @@ class Restaurant {
     }
 
     return this.#appliedEvent
-      .map(({ name, amount }) => `${name} : ${amount.toLocaleString()}원`)
+      .map(({ name, amount }) => `${name}: ${amount.toLocaleString()}원`)
       .join('\n');
   }
 
