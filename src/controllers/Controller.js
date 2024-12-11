@@ -4,6 +4,7 @@ import parser from '../utils/parser.js';
 import validateDate from '../validations/validateDate.js';
 import validateMenu from '../validations/validateMenu.js';
 import { MENU_REGEX } from '../constants/regex.js';
+import Benefit from '../models/Benefit.js';
 
 class Controller {
   constructor() {}
@@ -12,7 +13,11 @@ class Controller {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
     const menus = await this.#getValidatedMenu();
+    const benefit = new Benefit();
+    benefit.calculateDdayDiscount(date);
+    benefit.calculateWeekDiscount(date, menus);
 
+    console.log(benefit.getDiscount());
     // OutputView.printResult();
   }
 
