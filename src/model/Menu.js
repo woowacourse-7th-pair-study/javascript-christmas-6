@@ -18,6 +18,12 @@ class Menu {
 
     return menuInfo.category;
   }
+
+  getPrice(inputMenu) {
+    const menuInfo = this.#menu.find(({ name }) => inputMenu === name);
+
+    return menuInfo.price;
+  }
 }
 
 export default Menu;
