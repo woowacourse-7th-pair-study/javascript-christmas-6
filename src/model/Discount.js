@@ -11,6 +11,11 @@ export default class Discount {
     this.#orderArr = orderArr;
     this.#eventInfo = eventInfo;
     this.#discountInfo = {};
+    this.discount();
+  }
+
+  get discountInfo() {
+    return this.#discountInfo;
   }
 
   calculateTotalPrice() {

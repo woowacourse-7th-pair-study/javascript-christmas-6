@@ -22,6 +22,7 @@ class Controller {
     const ordersInstance = this.#generateOrderInstance(orders);
     const eventInfo = this.#eventCalendar.getEvent(date);
     const discount = new Discount(ordersInstance, eventInfo);
+    const discountInfo = discount.discountInfo;
   }
 
   async #readDate() {
