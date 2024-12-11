@@ -1,8 +1,8 @@
-import InputView from './InputView.js';
-import Menu from './Menu.js';
-import OutputView from './OutputView.js';
-import Restaurant from './Restaurant.js';
-import Validation from './Validation.js';
+import InputView from "./InputView.js";
+import Menu from "./Menu.js";
+import OutputView from "./OutputView.js";
+import Restaurant from "./Restaurant.js";
+import Validation from "./Validation.js";
 
 class App {
   #menu;
@@ -23,6 +23,8 @@ class App {
     OutputView.printMenu(restaurant.getOrderListForPrint());
 
     OutputView.printTotalAmountBeforeDiscount(restaurant.calculateTotalAmount(this.#menu));
+
+    restaurant.calculateDiscount(this.#menu);
   }
 
   async #getVisitDay() {
@@ -39,7 +41,7 @@ class App {
   async #getOrder() {
     try {
       const input = await InputView.readOrder();
-      const orderList = input.split(',');
+      const orderList = input.split(",");
       Validation.order(this.#menu, orderList);
       return orderList;
     } catch (error) {
