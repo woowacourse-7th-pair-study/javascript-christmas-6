@@ -1,5 +1,5 @@
-import { DISCOUNT } from "../constants/discount";
-import { ROLE } from "../constants/role";
+import { DISCOUNT, DISCOUNT_KEYS } from '../constants/discount';
+import { ROLE } from '../constants/role';
 
 export default class Discount {
   #orderArr;
@@ -33,39 +33,57 @@ export default class Discount {
       this.#dDAyDiscount();
     }
     //평일
-    if (this.#eventInfo.weekInfo === "weekday") {
+    if (this.#eventInfo.weekInfo === 'weekday') {
       this.#weekdayDiscount();
     }
     //주말
-    if (this.#eventInfo.weekInfo === "weekend") {
+    if (this.#eventInfo.weekInfo === 'weekend') {
       this.#weekendDiscount();
     }
+  }
+
+  getTotalPrice() {
+    return this.#orderArr.reduce(
+      (acc, order) => acc + order.getTotalPrice(),
+      0,
+    );
+  }
+
+  getTotalDiscount() {
+    return Object.values(this.#discountInfo).reduce(
+      (acc, value) => acc + value,
+      0,
+    );
+  }
+
+  getFinalPrice() {
+    return this.getTotalPrice() - this.getTotalDiscount();
   }
 
   #dDAyDiscount() {
     const dDayDiscount =
       DISCOUNT.dday_start_amount +
       DISCOUNT.dday_add_unit * this.#eventInfo.dDay;
-    this.#discountInfo["dDay"] = dDayDiscount;
+    this.#discountInfo[DISCOUNT_KEYS.dday] = dDayDiscount;
   }
 
   #weekdayDiscount() {
     const dessertArr = this.#orderArr.filter(
-      (order) => order.category === "디저트"
+      (order) => order.category === '디저트',
     );
     const weekdayDiscount = dessertArr.reduce(
       (acc, order) => acc + order.getWeekDiscount(),
-      0
+      0,
     );
-    this.#discountInfo["weekdayDicount"] = weekdayDiscount;
+    this.#discountInfo[DISCOUNT_KEYS.weekday] = weekdayDiscount;
   }
 
   #weekendDiscount() {
-    const mainArr = this.#orderArr.filter((order) => order.category === "메인");
+    const mainArr = this.#orderArr.filter((order) => order.category === '메인');
     const weekendDiscount = mainArr.reduce(
       (acc, order) => acc + order.getWeekDiscount(),
-      0
+      0,
     );
-    this.#discountInfo["weekendDicount"] = weekendDiscount;
+    this.#discountInfo[DISCOUNT_KEYS.weekend] = weekendDiscount;
   }
 }

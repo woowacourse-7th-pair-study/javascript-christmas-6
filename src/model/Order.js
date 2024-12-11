@@ -1,4 +1,4 @@
-import { DISCOUNT } from "../constants/discount";
+import { DISCOUNT } from '../constants/discount';
 
 export default class Order {
   // [양송이스프,1]
@@ -14,13 +14,17 @@ export default class Order {
     this.#price = price;
   }
 
-  getTotalPric() {
+  getTotalPrice() {
     return this.#count * this.#price;
   }
   getWeekDiscount() {
-    return DISCOUNT.week_discount * this.#price;
+    return DISCOUNT.week_discount * this.#count;
   }
   get category() {
     return this.#category;
+  }
+
+  getInfoStr() {
+    return `${this.#name} ${this.#count}개`;
   }
 }
