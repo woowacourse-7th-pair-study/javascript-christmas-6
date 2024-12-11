@@ -12,13 +12,16 @@ class Controller {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
     const menus = await this.#getValidatedMenu();
+    const totalPrice = getTotalPrice(menus);
     const benefitCalculator = new BenefitCalculator();
+
     benefitCalculator.calculateDdayDiscount(date);
     benefitCalculator.calculateWeekDiscount(date, menus);
 
-    const totalPrice = getTotalPrice(menus);
+    const benefitDiscount = benefitCalculator.getBenefitDiscount();
 
     OutputView.printResultStartMessage(date);
+    OutputView.printResult(menus, totalPrice, benefitDiscount);
   }
 
   #getValidatedDate() {
