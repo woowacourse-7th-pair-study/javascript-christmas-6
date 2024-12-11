@@ -5,7 +5,7 @@ import { MENU } from '../constants/menu.js';
 
 const validateMenu = (stringArray) => {
   const totalQuantity = 0;
-  const allMenu = MENU.map(({menu}) => menu);
+  const allMenu = MENU.map(({ menu }) => menu);
   const inputMenu = [];
 
   stringArray.forEach((string) => {
@@ -24,18 +24,17 @@ const validateMenu = (stringArray) => {
     const isExist = (item) => item === menu;
     if (!allMenu.some(isExist)) throw new Error(ERROR_MESSAGE.invalidMenu);
 
-    const type = MENU.find((menuItem) => menuItem.menu === menu).type;
+    const { type } = MENU.find((menuItem) => menuItem.menu === menu);
     inputMenu.push({ type, menu });
   });
 
-  const inputMenuSet = new Set(inputMenu);
-  if (inputMenu.length !== inputMenuSet.size) throw new Error(ERROR_MESSAGE.invalidMenu);
+  const inputMenuSet = new Set([...inputMenu.map((menu) => menu.menu)]);
+  if (inputMenu.length !== inputMenuSet.size)
+    throw new Error(ERROR_MESSAGE.invalidMenu);
 
   // 음료만 주문한 메뉴들인지
-  inputMenu.forEach((menu) => {
-    const menuType = MENU.find((menuItem) => menuItem.menu === menu).type;
-    if (menuType !== 'drink') return;
-  });
+  const filteredType = inputMenu.filter(({ type }) => type !== 'drink');
+  if (filteredType.length === 0) throw new Error(ERROR_MESSAGE.invalidMenu);
 
   if (totalQuantity > 20) throw new Error(ERROR_MESSAGE.invalidMenu);
 };

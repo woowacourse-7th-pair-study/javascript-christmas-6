@@ -3,6 +3,7 @@ import OutputView from '../views/OutputView.js';
 import parser from '../utils/parser.js';
 import validateDate from '../validations/validateDate.js';
 import validateMenu from '../validations/validateMenu.js';
+import { MENU_REGEX } from '../constants/regex.js';
 
 class Controller {
   constructor() {}
@@ -10,7 +11,7 @@ class Controller {
   async start() {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
-    const menu = await this.#getValidatedMenu();
+    const menus = await this.#getValidatedMenu();
 
     // OutputView.printResult();
   }
@@ -29,7 +30,10 @@ class Controller {
       const menuArray = parser.stringToArray(input);
       validateMenu(menuArray);
 
-      // return menuArray;
+      return menuArray.map((menuString) => {
+        const { menu, quantity } = menuString.match(MENU_REGEX).groups;
+        return { menu, quantity: parser.stringToNumber(quantity) };
+      });
     });
   }
 }
