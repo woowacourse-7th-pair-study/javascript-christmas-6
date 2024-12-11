@@ -1,6 +1,7 @@
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import parser from '../utils/parser.js';
+import validateDate from '../validations/validateDate.js';
 
 class Controller {
   constructor() {}
@@ -16,14 +17,19 @@ class Controller {
   #getValidatedDate() {
     return InputView.readDate()((input) => {
       const date = parser.stringToNumber(input);
-      vali
+      validateDate(date);
 
-      // return date;
+      return date;
     });
   }
 
   #getValidatedMenu() {
+    return InputView.readMenu()((input) => {
+      const date = parser.stringToNumber(input);
+      validateDate(date);
 
+      return date;
+    });
   }
 }
 

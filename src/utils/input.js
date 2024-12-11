@@ -1,6 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
 import OutputView from '../views/OutputView.js';
-import InputView from '../views/InputView.js';
 
 const repeatUtilComplete = (message) => async (validationCallback) => {
   try {
@@ -10,6 +9,6 @@ const repeatUtilComplete = (message) => async (validationCallback) => {
     OutputView.printErrorMessage(error.message);
     return repeatUtilComplete(message)(validationCallback);
   }
-}
+};
 
 export default repeatUtilComplete;
