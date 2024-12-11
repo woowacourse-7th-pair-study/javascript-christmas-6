@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "../constants/messages";
+import { ERROR_MESSAGES } from '../constants/messages';
 
 export default class Validate {
   static date(date) {
@@ -7,17 +7,32 @@ export default class Validate {
     this.#isInteger(date);
   }
   //[[양송이스프,1],[초코케이크,2]]
-  static order(orderArr) {
+  static order(orderArr, menu) {
     let totalCount = 0;
     const nameArr = [];
+
     orderArr.forEach(([name, count]) => {
       totalCount += count;
       this.#isValidCount(totalCount);
+      this.#validMenu(name, menu);
       this.#isDuplicate(name, nameArr);
       nameArr.push(name);
       this.#validateCount(count);
     });
+
+    this.#validateJuice(nameArr, menu);
   }
+
+  static #validateJuice(nameArr, menu) {
+    const categories = nameArr.map((name) => {
+      return menu.getCategory(name);
+    });
+
+    if (categories.every((category) => category === '음료')) {
+      throw new Error(ERROR_MESSAGES.order);
+    }
+  }
+
   static #validateCount(count) {
     this.#isNumber(count);
     this.#isInteger(count);
@@ -53,5 +68,8 @@ export default class Validate {
     if (!Number.isInteger(date)) {
       throw new Error(ERROR_MESSAGES.date);
     }
+  }
+  static #validMenu(inputMenu, menu) {
+    return menu.checkName(inputMenu);
   }
 }
