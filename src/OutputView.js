@@ -16,6 +16,18 @@ const OutputView = {
     Console.print('\n<할인 전 총주문 금액>');
     Console.print(`${amount.toLocaleString()}원`);
   },
+  printEventInfo(eventInfo) {
+    Console.print('\n<혜택 내역>');
+    Console.print(eventInfo);
+  },
+  printTotalEventAmount(eventAmount) {
+    Console.print('\n<총 혜택 금액>');
+    Console.print(`${eventAmount.toLocaleString()}원`);
+  },
+  printTotalPurchaseAmount(purchaseAmount) {
+    Console.print('\n<할인 후 예상 결제 금액>');
+    Console.print(`${purchaseAmount.toLocaleString()}원`);
+  },
   printMessage(message) {
     Console.print(message);
   },
