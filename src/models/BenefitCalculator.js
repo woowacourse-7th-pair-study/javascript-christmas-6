@@ -43,7 +43,7 @@ class BenefitCalculator {
   }
 
   /**
-   * 주말인 경우, 메인 메뉴를 메뉴 1개 당 2,023원 할인한다
+   * 평일인 경우, 디저트 메뉴를 메뉴 1개 당 2,023원 할인한다
    * @param {Array<{ menu: string, quantity: number }>} menus
    */
   #calculateWeekdayDiscount(menus) {

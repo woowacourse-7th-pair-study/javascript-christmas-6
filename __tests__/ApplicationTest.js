@@ -1,6 +1,6 @@
-import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
 import { EOL as LINE_SEPARATOR } from 'os';
+import App from '../src/App.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -19,9 +19,7 @@ const getLogSpy = () => {
   return logSpy;
 };
 
-const getOutput = (logSpy) => {
-  return [...logSpy.mock.calls].join(LINE_SEPARATOR);
-};
+const getOutput = (logSpy) => [...logSpy.mock.calls].join(LINE_SEPARATOR);
 
 const expectLogContains = (received, expectedLogs) => {
   expectedLogs.forEach((log) => {
@@ -84,14 +82,14 @@ describe('기능 테스트', () => {
   test('혜택 내역 타이틀과 없음 출력', async () => {
     // given
     const logSpy = getLogSpy();
-    mockQuestions(['26', '타파스-1,제로콜라-1']);
+    mockQuestions(['24', '타파스-1,제로콜라-1']);
 
     // when
     const app = new App();
     await app.run();
 
     // then
-    const expected = ['<혜택 내역>' + LINE_SEPARATOR + '없음'];
+    const expected = [`<혜택 내역>${LINE_SEPARATOR}없음`];
 
     expectLogContains(getOutput(logSpy), expected);
   });
@@ -100,7 +98,8 @@ describe('기능 테스트', () => {
 describe('예외 테스트', () => {
   test('날짜 예외 테스트', async () => {
     // given
-    const INVALID_DATE_MESSAGE = '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.';
+    const INVALID_DATE_MESSAGE =
+      '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.';
     const INPUTS_TO_END = ['1', '해산물파스타-2'];
     const logSpy = getLogSpy();
     mockQuestions(['a', ...INPUTS_TO_END]);
@@ -110,12 +109,15 @@ describe('예외 테스트', () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(INVALID_DATE_MESSAGE));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining(INVALID_DATE_MESSAGE),
+    );
   });
 
   test('주문 예외 테스트', async () => {
     // given
-    const INVALID_ORDER_MESSAGE = '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.';
+    const INVALID_ORDER_MESSAGE =
+      '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.';
     const INPUTS_TO_END = ['해산물파스타-2'];
     const logSpy = getLogSpy();
     mockQuestions(['3', '제로콜라-a', ...INPUTS_TO_END]);
@@ -125,6 +127,8 @@ describe('예외 테스트', () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(INVALID_ORDER_MESSAGE));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining(INVALID_ORDER_MESSAGE),
+    );
   });
 });

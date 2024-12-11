@@ -12,11 +12,13 @@ class Controller {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
     const menus = await this.#getValidatedMenu();
-    const totalPrice = getTotalPrice(menus);
     const benefitCalculator = new BenefitCalculator();
+    const totalPrice = getTotalPrice(menus);
 
-    benefitCalculator.calculateDdayDiscount(date);
-    benefitCalculator.calculateWeekDiscount(date, menus);
+    if (totalPrice >= 10_000) {
+      benefitCalculator.calculateDdayDiscount(date);
+      benefitCalculator.calculateWeekDiscount(date, menus);
+    }
 
     const benefitDiscount = benefitCalculator.getBenefitDiscount();
 
