@@ -1,9 +1,13 @@
 import { ERROR_MESSAGE } from '../constants/message.js';
 import { MENU_REGEX } from '../constants/regex.js';
 import validate from '../utils/validate.js';
+import { MENU } from '../constants/menu.js';
 
 const validateMenu = (stringArray) => {
   const totalQuantity = 0;
+  const allMenu = MENU.map(({menu}) => menu);
+  const inputMenu = [];
+
   stringArray.forEach((string) => {
     if (!MENU_REGEX.test(string)) throw new Error(ERROR_MESSAGE.invalidMenu);
     const { menu, quantity: quantityString } = string.match(MENU_REGEX).groups;
@@ -16,6 +20,21 @@ const validateMenu = (stringArray) => {
     ) {
       throw new Error(ERROR_MESSAGE.invalidMenu);
     }
+
+    const isExist = (item) => item === menu;
+    if (!allMenu.some(isExist)) throw new Error(ERROR_MESSAGE.invalidMenu);
+
+    const type = MENU.find((menuItem) => menuItem.menu === menu).type;
+    inputMenu.push({ type, menu });
+  });
+
+  const inputMenuSet = new Set(inputMenu);
+  if (inputMenu.length !== inputMenuSet.size) throw new Error(ERROR_MESSAGE.invalidMenu);
+
+  // 음료만 주문한 메뉴들인지
+  inputMenu.forEach((menu) => {
+    const menuType = MENU.find((menuItem) => menuItem.menu === menu).type;
+    if (menuType !== 'drink') return;
   });
 
   if (totalQuantity > 20) throw new Error(ERROR_MESSAGE.invalidMenu);

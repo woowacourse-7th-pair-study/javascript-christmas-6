@@ -2,6 +2,7 @@ import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import parser from '../utils/parser.js';
 import validateDate from '../validations/validateDate.js';
+import validateMenu from '../validations/validateMenu.js';
 
 class Controller {
   constructor() {}
@@ -25,10 +26,10 @@ class Controller {
 
   #getValidatedMenu() {
     return InputView.readMenu()((input) => {
-      const date = parser.stringToNumber(input);
-      validateDate(date);
+      const menuArray = parser.stringToArray(input);
+      validateMenu(menuArray);
 
-      return date;
+      // return menuArray;
     });
   }
 }
